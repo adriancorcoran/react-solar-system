@@ -1,8 +1,11 @@
 import React from "react";
 import OrbitingObject from "./components/OrbitingObject";
 // import logo from "./logo.svg";
+// styles
 import "./css/App.css";
 import "./css/Starfield.css";
+// helpers and data
+import { solarSystemData } from "./lib/orbiting-data";
 
 class App extends React.Component {
   // set universe properties
@@ -16,7 +19,7 @@ class App extends React.Component {
         },
         angle: 0,
         angleChange: 0.025,
-        viewTilt: 0.75,
+        viewTilt: 0.85,
         speed: 1,
         frameRate: 50
       }
@@ -70,6 +73,19 @@ class App extends React.Component {
     });
   };
 
+  renderSolarSystem = () => {
+    return solarSystemData.map((item, i) => {
+      return (
+        <OrbitingObject
+          key={i}
+          universe={this.state.universe}
+          properties={item.properties}
+          zIndex={i}
+        />
+      );
+    });
+  };
+
   render() {
     return (
       <div className="universe">
@@ -77,36 +93,8 @@ class App extends React.Component {
         <div id="stars2" />
         <div id="stars3" />
 
-        <OrbitingObject
-          key="1"
-          universe={this.state.universe}
-          properties={{
-            diameter: 20,
-            radius: 250,
-            speed: 1.1,
-            orbitOffset: 45
-          }}
-        />
-        <OrbitingObject
-          key="2"
-          universe={this.state.universe}
-          properties={{
-            diameter: 50,
-            radius: 500,
-            speed: 0.5,
-            orbitOffset: 60
-          }}
-        />
-        <OrbitingObject
-          key="3"
-          universe={this.state.universe}
-          properties={{
-            diameter: 10,
-            radius: 700,
-            speed: 1.5,
-            orbitOffset: 145
-          }}
-        />
+        {/* render the solar system data */}
+        {this.renderSolarSystem()}
       </div>
     );
   }

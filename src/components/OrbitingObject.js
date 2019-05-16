@@ -8,7 +8,8 @@ class OrbitingObject extends React.Component {
       properties: {
         ...props.properties,
         position: { px: 0, py: 0 },
-        display: "none"
+        display: "none",
+        zIndex: props.zIndex
       }
     };
   }
@@ -57,7 +58,10 @@ class OrbitingObject extends React.Component {
   render() {
     // style object and render position using state
     const style = {
-      background: "radial-gradient(circle at 10px 10px, #2da8ff, #000)",
+      background:
+        "radial-gradient(circle at 25% 25%, " +
+        this.state.properties.color +
+        ", #000)",
       borderRadius: "100%",
       boxShadow: "2px 2px 5px 0px #000",
       position: "absolute",
@@ -65,8 +69,14 @@ class OrbitingObject extends React.Component {
       left: `${this.state.properties.position.px}px`,
       width: `${this.state.properties.diameter}px`,
       height: `${this.state.properties.diameter}px`,
-      display: this.state.properties.display
+      display: this.state.properties.display,
+      zIndex: this.state.properties.zIndex
     };
+
+    // top left quadrant: x < cx and y > cy
+    // top right quadrant: x > cx and y > cy
+    // bottom right quadrant: x > cx and y < cy
+    // bottom left quadrant: x < cx and y < cy
 
     return (
       <div className="orbiting-object" style={style}>
