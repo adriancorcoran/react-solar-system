@@ -99,10 +99,11 @@ class OrbitingObject extends React.Component {
     // set the initial % position for the gradient highlight
     // formula is the same for the top hemi and then different in each bottom quadrant
     let gx = 50;
+    let gy = 50;
 
     // don't do it for the sun
     if (solarObject.parentId !== "universe") {
-      // && solarObject.name === "Earth") {
+      // && solarObject.name === "Venus") {
       // calculate which hemisphere of the orbit around the universe center we are in
       // this is used to set the body highlight position
       let hemiTopUniverse = true; //  top hemisphere
@@ -116,73 +117,69 @@ class OrbitingObject extends React.Component {
 
       // top hemisphere
       if (hemiTopUniverse) {
+        //  ------------------------------------------------
+        //  X POSITION
+        //  ------------------------------------------------
         // need the % of the current position (px) compared to the left most position
         // (universe.center.cx - solarObject.radius) over the entire orbital range
         // (2 * solarObject.radius)
 
         // planets
-        let totalRadius = universe.center.cx - solarObject.radius;
-        let totalOrbit = 2 * solarObject.radius;
+        let totalRadiusX = universe.center.cx - solarObject.radius;
+        let totalOrbitX = 2 * solarObject.radius;
         // satellites
         if (solarObject.parentId !== "sun") {
-          totalRadius -= solarSystem[solarObject.parentId].radius;
-          totalOrbit += 2 * solarSystem[solarObject.parentId].radius;
+          totalRadiusX -= solarSystem[solarObject.parentId].radius;
+          totalOrbitX += 2 * solarSystem[solarObject.parentId].radius;
         }
         // calculation
-        let gDecimal = (px - totalRadius) / totalOrbit;
-        gx = 100 - Math.round(gDecimal * 100);
+        let gDecimalX = (px - totalRadiusX) / totalOrbitX;
+        gx = 100 - Math.round(gDecimalX * 100);
+        //  ------------------------------------------------
+        //  Y POSITION
+        //  ------------------------------------------------
+        // calculation
+        // let gDecimalY = Math.abs(py - universe.center.cy) / solarObject.radius;
+        // gy = 50 + gDecimalY * 50 * (1 - universe.viewTilt);
+        //  ------------------------------------------------
       } else {
+        //  ------------------------------------------------
+        //  X POSITION
+        //  ------------------------------------------------
         // bottom left hemisphere
         if (hemiLeftUniverse) {
-          // planets
-          // need the % of the current position (px) compared to the radius position
-          // (universe.center.cx - solarObject.radius) over half the orbital range
-          // (solarObject.radius)
-          // also multiply by 1+gDecimal to give a sense of easing from 0 to -500 speeding
+          // also multiply by 1+gDecimalX to give a sense of easing from 0 to -500 speeding
           // up as we get closer to -500
 
           // planets
-          let totalRadius = universe.center.cx - solarObject.radius;
-          let totalOrbit = solarObject.radius;
+          let totalRadiusX = universe.center.cx - solarObject.radius;
+          let totalOrbitX = solarObject.radius;
           // satellites
           if (solarObject.parentId !== "sun") {
-            totalRadius -= solarSystem[solarObject.parentId].radius;
-            totalOrbit += solarSystem[solarObject.parentId].radius;
+            totalRadiusX -= solarSystem[solarObject.parentId].radius;
+            totalOrbitX += solarSystem[solarObject.parentId].radius;
           }
           // calculation
-          let gDecimal = (px - totalRadius) / totalOrbit;
-          gx = gDecimal * 200 * (1 + gDecimal) + 100;
+          let gDecimalX = (px - totalRadiusX) / totalOrbitX;
+          gx = gDecimalX * 200 * (1 + gDecimalX) + 100;
         } else {
-          // planets
-          // need the % of the current position (px) compared to the radius position
-          // (universe.center.cx - solarObject.radius) over half the orbital range
-          // (solarObject.radius)
-          // also multiply by 1+gDecimal to give a sense of easing from 0 to -500 speeding
-          // up as we get closer to -500
+          // bottom right hemisphere
 
           // planets
-          let totalRadius = universe.center.cx + solarObject.radius;
-          let totalOrbit = solarObject.radius;
+          let totalRadiusX = universe.center.cx + solarObject.radius;
+          let totalOrbitX = solarObject.radius;
           // satellites
           if (solarObject.parentId !== "sun") {
-            totalRadius += solarSystem[solarObject.parentId].radius;
-            totalOrbit += solarSystem[solarObject.parentId].radius;
+            totalRadiusX += solarSystem[solarObject.parentId].radius;
+            totalOrbitX += solarSystem[solarObject.parentId].radius;
           }
           // calculation
-          let gDecimal = (totalRadius - px) / totalOrbit;
-          gx = gDecimal * -200 * (1 + gDecimal);
+          let gDecimalX = (totalRadiusX - px) / totalOrbitX;
+          gx = gDecimalX * -200 * (1 + gDecimalX);
         }
+        //  ------------------------------------------------
       }
     }
-
-    //  ------------------------------------------------
-    // let hemiLeft = true; //  left hemisphere
-    //  ------------------------------------------------
-    // if (px > parentPosition.cx) {
-    //   hemiLeft = false; //  right hemisphere
-    // }
-    //  ------------------------------------------------
-    //  ------------------------------------------------
 
     //  ------------------------------------------------
     // update state
@@ -193,7 +190,7 @@ class OrbitingObject extends React.Component {
         px,
         py
       },
-      gradient: { gx, gy: 0 },
+      gradient: { gx, gy },
       display: "block"
     });
   }
@@ -204,7 +201,9 @@ class OrbitingObject extends React.Component {
       background:
         "radial-gradient(circle at " +
         this.state.gradient.gx +
-        "% 25%, " +
+        "% " +
+        this.state.gradient.gy +
+        "%, " +
         this.state.color +
         ", #000)",
       borderRadius: "100%",
