@@ -18,8 +18,9 @@ class App extends React.Component {
           cy: window.innerHeight / 2
         },
         viewTilt: 0.85,
-        speed: 1,
-        frameRate: 50
+        speed: 0.5,
+        frameRate: 50,
+        zIndex: 5000
       }
     };
   }
@@ -55,8 +56,13 @@ class App extends React.Component {
   };
 
   render() {
+    // style object and render position using state
+    const style = {
+      zIndex: this.state.universe.zIndex
+    };
+
     return (
-      <div id="universe" className="universe">
+      <div id="universe" className="universe" style={style}>
         <div id="stars" />
         <div id="stars2" />
         <div id="stars3" />
@@ -70,7 +76,6 @@ class App extends React.Component {
               key={i}
               universe={this.state.universe}
               solarObject={solarObject}
-              zIndex={i}
             />
           );
         })}

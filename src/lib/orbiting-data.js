@@ -5,13 +5,38 @@ exports.solarSystemData = {
   Sun: {
     id: "sun",
     name: "Sun",
-    parentId: false,
+    parentId: "universe",
     angle: 0,
     angleChange: 0,
-    diameter: 100,
+    diameter: 200,
     radius: 0,
     speed: 0,
-    color: "#FFF048"
+    color: "#FFF048",
+    zIndexVariation: 0
+  },
+  Mercury: {
+    id: "mercury",
+    name: "Mercury",
+    parentId: "sun",
+    angle: 10,
+    angleChange: 0.03,
+    diameter: 15,
+    radius: 150,
+    speed: 1,
+    color: "#FFE7D6",
+    zIndexVariation: 100
+  },
+  Venus: {
+    id: "venus",
+    name: "Venus",
+    parentId: "sun",
+    angle: 200,
+    angleChange: 0.028,
+    diameter: 20,
+    radius: 250,
+    speed: 0.85,
+    color: "#FFCF10",
+    zIndexVariation: 200
   },
   Earth: {
     id: "earth",
@@ -22,7 +47,8 @@ exports.solarSystemData = {
     diameter: 30,
     radius: 400,
     speed: 0.5,
-    color: "#2da8ff"
+    color: "#2da8ff",
+    zIndexVariation: 300
   },
   Moon: {
     id: "moon",
@@ -30,51 +56,46 @@ exports.solarSystemData = {
     parentId: "earth",
     angle: 0,
     angleChange: 0.05,
-    diameter: 10,
-    radius: 100,
+    diameter: 5,
+    radius: 50,
     speed: 2,
-    color: "#FFE7D6"
-  }
-};
-exports.solarSystemData1 = {
-  Sun: {
-    name: "Sun",
-    diameter: 75,
-    radius: 0,
-    speed: 0,
-    orbitOffset: 0,
-    color: "#FFF048"
-  },
-  Mercury: {
-    name: "Mercury",
-    diameter: 15,
-    radius: 100,
-    speed: 1.3,
-    orbitOffset: 0,
-    color: "#FFE7D6"
-  },
-  Venus: {
-    name: "Venus",
-    diameter: 20,
-    radius: 200,
-    speed: 1.1,
-    orbitOffset: 30,
-    color: "#FFCF10"
-  },
-  Earth: {
-    name: "Earth",
-    diameter: 30,
-    radius: 400,
-    speed: 1,
-    orbitOffset: 45,
-    color: "#2da8ff"
+    color: "#FFE7D6",
+    zIndexVariation: 1
   },
   Mars: {
+    id: "mars",
     name: "Mars",
+    parentId: "sun",
+    angle: 100,
+    angleChange: 0.023,
     diameter: 25,
     radius: 600,
-    speed: 0.9,
-    orbitOffset: 60,
-    color: "#FF5F36"
+    speed: 0.5,
+    color: "#FF5F36",
+    zIndexVariation: 400
+  },
+  Deimos: {
+    id: "deimos",
+    name: "Deimos",
+    parentId: "mars",
+    angle: 5,
+    angleChange: 0.05,
+    diameter: 5,
+    radius: 40,
+    speed: 1.9,
+    color: "#FFE7D6",
+    zIndexVariation: 1
+  },
+  Phobos: {
+    id: "phobos",
+    name: "Phobos",
+    parentId: "mars",
+    angle: 25,
+    angleChange: 0.06,
+    diameter: 4,
+    radius: 55,
+    speed: 2.1,
+    color: "#FFE7D6",
+    zIndexVariation: 2
   }
 };

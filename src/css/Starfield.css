@@ -187,6 +187,7 @@ html {
     1387px 884px #bbb, 257px 1730px #bbb, 940px 1690px #bbb, 425px 1045px #bbb,
     1710px 1089px #bbb, 1507px 216px #bbb, 1693px 753px #bbb, 94px 1864px #bbb;
   animation: animStar 200s linear infinite;
+  z-index: -9999;
 }
 #stars:after {
   content: " ";
@@ -431,6 +432,7 @@ html {
     539px 587px #bbb, 1152px 1691px #bbb, 1075px 313px #bbb, 1949px 205px #bbb,
     1991px 748px #bbb, 873px 988px #bbb;
   animation: animStar 400s linear infinite;
+  z-index: -9999;
 }
 #stars2:after {
   content: " ";
@@ -524,6 +526,7 @@ html {
     950px 165px #bbb, 125px 1397px #bbb, 35px 672px #bbb, 20px 437px #bbb,
     1931px 1723px #bbb, 1716px 754px #bbb;
   animation: animStar 600s linear infinite;
+  z-index: -9999;
 }
 #stars3:after {
   content: " ";

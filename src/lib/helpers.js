@@ -10,3 +10,7 @@ exports.getPosition = el => {
     cx: rect.left + scrollLeft + rect.width / 2
   };
 };
+// get the zIndex of an element on the page
+exports.getZIndex = el => {
+  return parseInt(el.style.zIndex);
+};

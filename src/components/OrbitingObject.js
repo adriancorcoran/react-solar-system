@@ -1,6 +1,6 @@
 import React from "react";
 // helpers and data
-import { getPosition } from "../lib/helpers";
+import { getPosition, getZIndex } from "../lib/helpers";
 
 class OrbitingObject extends React.Component {
   // create the object and init the state
@@ -19,9 +19,7 @@ class OrbitingObject extends React.Component {
     // set a reference in state to the parent element, if exists
     if (this.state.parentId !== false) {
       this.setState({
-        parentElement: this.state.parentId
-          ? document.querySelector(`#${this.state.parentId}`)
-          : document.querySelector(`#universe`)
+        parentElement: document.querySelector(`#${this.state.parentId}`)
       });
     }
 
@@ -74,6 +72,37 @@ class OrbitingObject extends React.Component {
         Math.sin(angle) -
       solarObject.diameter / 2;
     //  ------------------------------------------------
+    // calculate which quadrant of the orbit we are in
+    // this is used to move the object shadow and set the z-index
+
+    // top left quadrant: x < cx and y > cy
+    // top right quadrant: x > cx and y > cy
+    // bottom right quadrant: x > cx and y < cy
+    // bottom left quadrant: x < cx and y < cy
+    let hemiTop = true; //  top hemisphere
+    let hemiLeft = true; //  left hemisphere
+    if (px > parentPosition.cx) {
+      hemiLeft = false; //  right hemisphere
+    }
+    if (py > parentPosition.cy) {
+      hemiTop = false; //  bottom hemisphere
+    }
+    //  ------------------------------------------------
+    // set the z index to the negative value of the z-index value
+    if (hemiTop) {
+      this.setState({
+        zIndex:
+          getZIndex(this.state.parentElement) - solarObject.zIndexVariation
+      });
+    } else {
+      // set to the positive value
+      this.setState({
+        zIndex:
+          getZIndex(this.state.parentElement) + solarObject.zIndexVariation
+      });
+    }
+
+    //  ------------------------------------------------
     // update state
     this.setState({
       ...this.state,
@@ -101,11 +130,6 @@ class OrbitingObject extends React.Component {
       display: this.state.display,
       zIndex: this.state.zIndex
     };
-
-    // top left quadrant: x < cx and y > cy
-    // top right quadrant: x > cx and y > cy
-    // bottom right quadrant: x > cx and y < cy
-    // bottom left quadrant: x < cx and y < cy
 
     return (
       <div id={this.state.id} className="orbiting-object" style={style}>
