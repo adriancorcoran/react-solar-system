@@ -18,7 +18,7 @@ class App extends React.Component {
           cy: window.innerHeight / 2
         },
         viewTilt: 0.85,
-        speed: 0.75,
+        speed: 2, //  .75 is good
         frameRate: 50,
         zIndex: 5000
       },

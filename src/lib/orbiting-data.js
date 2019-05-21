@@ -42,7 +42,7 @@ exports.solarSystemData = {
     id: "earth",
     name: "Earth",
     parentId: "sun",
-    angle: 90,
+    angle: 0,
     angleChange: 0.025,
     diameter: 30,
     radius: 400,
