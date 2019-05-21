@@ -67,14 +67,15 @@ class OrbitingObject extends React.Component {
     // calculate x and y position
     let px =
       parentPosition.cx +
-      solarObject.radius * Math.cos(angle) -
-      solarObject.diameter / 2;
+      solarObject.radius * universe.scale * Math.cos(angle) -
+      (solarObject.diameter * universe.scale) / 2;
     let py =
       parentPosition.cy +
       solarObject.radius *
+        universe.scale *
         (1 - this.props.universe.viewTilt) *
         Math.sin(angle) -
-      solarObject.diameter / 2;
+      (solarObject.diameter * universe.scale) / 2;
 
     //  ------------------------------------------------
     //  CALCULATE Z-INDEX
@@ -161,7 +162,9 @@ class OrbitingObject extends React.Component {
           }
           // calculation
           let gDecimalX = (px - totalRadiusX) / totalOrbitX;
-          gx = gDecimalX * 200 * (1 + gDecimalX) + 100;
+          gx =
+            gDecimalX * (200 * universe.scale) * (1 + gDecimalX) +
+            100 * universe.scale;
         } else {
           // bottom right hemisphere
 
@@ -175,7 +178,7 @@ class OrbitingObject extends React.Component {
           }
           // calculation
           let gDecimalX = (totalRadiusX - px) / totalOrbitX;
-          gx = gDecimalX * -200 * (1 + gDecimalX);
+          gx = gDecimalX * (-200 * universe.scale) * (1 + gDecimalX);
         }
         //  ------------------------------------------------
       }
@@ -211,8 +214,8 @@ class OrbitingObject extends React.Component {
       position: "absolute",
       top: `${this.state.position.py}px`,
       left: `${this.state.position.px}px`,
-      width: `${this.state.diameter}px`,
-      height: `${this.state.diameter}px`,
+      width: `${this.state.diameter * this.props.universe.scale}px`,
+      height: `${this.state.diameter * this.props.universe.scale}px`,
       display: this.state.display,
       zIndex: this.state.zIndex
     };

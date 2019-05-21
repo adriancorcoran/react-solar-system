@@ -18,9 +18,10 @@ class App extends React.Component {
           cy: window.innerHeight / 2
         },
         viewTilt: 0.85,
-        speed: 2, //  .75 is good
+        speed: 0.75,
         frameRate: 50,
-        zIndex: 5000
+        zIndex: 5000,
+        scale: 1
       },
       solarSystem: { ...solarSystemData }
     };
