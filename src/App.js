@@ -18,10 +18,11 @@ class App extends React.Component {
           cy: window.innerHeight / 2
         },
         viewTilt: 0.85,
-        speed: 0.5,
+        speed: 0.75,
         frameRate: 50,
         zIndex: 5000
-      }
+      },
+      solarSystem: { ...solarSystemData }
     };
   }
 
@@ -75,6 +76,7 @@ class App extends React.Component {
             <OrbitingObject
               key={i}
               universe={this.state.universe}
+              solarSystem={this.state.solarSystem}
               solarObject={solarObject}
             />
           );

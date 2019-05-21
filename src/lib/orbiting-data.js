@@ -2,7 +2,7 @@
 
 // solar system
 exports.solarSystemData = {
-  Sun: {
+  sun: {
     id: "sun",
     name: "Sun",
     parentId: "universe",
@@ -14,7 +14,7 @@ exports.solarSystemData = {
     color: "#FFF048",
     zIndexVariation: 0
   },
-  Mercury: {
+  mercury: {
     id: "mercury",
     name: "Mercury",
     parentId: "sun",
@@ -26,23 +26,23 @@ exports.solarSystemData = {
     color: "#FFE7D6",
     zIndexVariation: 100
   },
-  Venus: {
+  venus: {
     id: "venus",
     name: "Venus",
     parentId: "sun",
     angle: 200,
     angleChange: 0.028,
-    diameter: 20,
+    diameter: 25,
     radius: 250,
     speed: 0.85,
     color: "#FFCF10",
     zIndexVariation: 200
   },
-  Earth: {
+  earth: {
     id: "earth",
     name: "Earth",
     parentId: "sun",
-    angle: 45,
+    angle: 90,
     angleChange: 0.025,
     diameter: 30,
     radius: 400,
@@ -50,7 +50,7 @@ exports.solarSystemData = {
     color: "#2da8ff",
     zIndexVariation: 300
   },
-  Moon: {
+  moon: {
     id: "moon",
     name: "Moon",
     parentId: "earth",
@@ -62,37 +62,37 @@ exports.solarSystemData = {
     color: "#FFE7D6",
     zIndexVariation: 1
   },
-  Mars: {
+  mars: {
     id: "mars",
     name: "Mars",
     parentId: "sun",
     angle: 100,
     angleChange: 0.023,
-    diameter: 25,
+    diameter: 20,
     radius: 600,
     speed: 0.5,
     color: "#FF5F36",
     zIndexVariation: 400
   },
-  Deimos: {
+  deimos: {
     id: "deimos",
     name: "Deimos",
     parentId: "mars",
     angle: 5,
     angleChange: 0.05,
-    diameter: 5,
+    diameter: 4,
     radius: 40,
     speed: 1.9,
     color: "#FFE7D6",
     zIndexVariation: 1
   },
-  Phobos: {
+  phobos: {
     id: "phobos",
     name: "Phobos",
     parentId: "mars",
     angle: 25,
     angleChange: 0.06,
-    diameter: 4,
+    diameter: 3,
     radius: 55,
     speed: 2.1,
     color: "#FFE7D6",

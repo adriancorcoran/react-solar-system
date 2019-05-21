@@ -9,6 +9,7 @@ class OrbitingObject extends React.Component {
     this.state = {
       ...props.solarObject,
       position: { px: 0, py: 0 },
+      gradient: { gx: 0, gy: 0 },
       display: "none",
       zIndex: props.zIndex
     };
@@ -41,6 +42,9 @@ class OrbitingObject extends React.Component {
     // get copy of state and universe
     let solarObject = { ...this.state };
     let universe = { ...this.props.universe };
+    let solarSystem = { ...this.props.solarSystem };
+    //  ------------------------------------------------
+    //  CALCULATE POSITION
     //  ------------------------------------------------
     // calculate new angle
     let angle =
@@ -60,7 +64,7 @@ class OrbitingObject extends React.Component {
       parentPosition = getPosition(this.state.parentElement);
     }
     //  ------------------------------------------------
-    // calculate position
+    // calculate x and y position
     let px =
       parentPosition.cx +
       solarObject.radius * Math.cos(angle) -
@@ -71,36 +75,67 @@ class OrbitingObject extends React.Component {
         (1 - this.props.universe.viewTilt) *
         Math.sin(angle) -
       solarObject.diameter / 2;
-    //  ------------------------------------------------
-    // calculate which quadrant of the orbit we are in
-    // this is used to move the object shadow and set the z-index
 
-    // top left quadrant: x < cx and y > cy
-    // top right quadrant: x > cx and y > cy
-    // bottom right quadrant: x > cx and y < cy
-    // bottom left quadrant: x < cx and y < cy
-    let hemiTop = true; //  top hemisphere
-    let hemiLeft = true; //  left hemisphere
-    if (px > parentPosition.cx) {
-      hemiLeft = false; //  right hemisphere
-    }
-    if (py > parentPosition.cy) {
-      hemiTop = false; //  bottom hemisphere
-    }
     //  ------------------------------------------------
-    // set the z index to the negative value of the z-index value
-    if (hemiTop) {
-      this.setState({
-        zIndex:
-          getZIndex(this.state.parentElement) - solarObject.zIndexVariation
-      });
-    } else {
-      // set to the positive value
-      this.setState({
-        zIndex:
-          getZIndex(this.state.parentElement) + solarObject.zIndexVariation
-      });
+    //  CALCULATE Z-INDEX
+    //  ------------------------------------------------
+    // calculate which hemisphere of the orbit around the parent body we are in
+    // this is used to set the z-index
+    let hemiTopParent = true; //  top hemisphere
+    if (py > parentPosition.cy) {
+      hemiTopParent = false; //  bottom hemisphere
     }
+    // set the z index to the negative value of the z-index value
+    // this makes the objects pass behind each other correctly
+    this.setState({
+      zIndex: hemiTopParent
+        ? getZIndex(this.state.parentElement) - solarObject.zIndexVariation
+        : getZIndex(this.state.parentElement) + solarObject.zIndexVariation
+    });
+
+    //  ------------------------------------------------
+    //  CALCULATE HIGHLIGHT POSITION
+    //  ------------------------------------------------
+    // calculate which hemisphere of the orbit around the universe center we are in
+    // this is used to set the body highlight position
+    let hemiTopUniverse = true; //  top hemisphere
+    if (py > universe.center.cy) {
+      hemiTopUniverse = false; //  bottom hemisphere
+    }
+    // set the % position for the gradient highlight
+    // formula is the same for the top hemi and then different in each bottom quadrant
+    let gx = 0;
+    if (hemiTopUniverse) {
+      // planets
+      // currentneed the % of the current position (px) compared to the left most position
+      // (universe.center.cx - solarObject.radius) over the entire orbit (2 * solarObject.radius)
+      if (solarObject.parentId === "sun") {
+        let gDecimal =
+          (px - (universe.center.cx - solarObject.radius)) /
+          (2 * solarObject.radius);
+        gx = 100 - Math.round(gDecimal * 100);
+      } else if (solarObject.parentId !== "universe") {
+        // satellites
+        // as for plents but also need to account for the planets orbit as well
+        let gDecimal =
+          (px -
+            (universe.center.cx -
+              solarSystem[solarObject.parentId].radius -
+              solarObject.radius)) /
+          (2 * solarObject.radius +
+            2 * solarSystem[solarObject.parentId].radius);
+        gx = 100 - Math.round(gDecimal * 100);
+      }
+    }
+
+    //  ------------------------------------------------
+    // let hemiLeft = true; //  left hemisphere
+    //  ------------------------------------------------
+    // if (px > parentPosition.cx) {
+    //   hemiLeft = false; //  right hemisphere
+    // }
+    //  ------------------------------------------------
+    //  ------------------------------------------------
 
     //  ------------------------------------------------
     // update state
@@ -111,6 +146,7 @@ class OrbitingObject extends React.Component {
         px,
         py
       },
+      gradient: { gx, gy: 0 },
       display: "block"
     });
   }
@@ -119,7 +155,11 @@ class OrbitingObject extends React.Component {
     // style object and render position using state
     const style = {
       background:
-        "radial-gradient(circle at 25% 25%, " + this.state.color + ", #000)",
+        "radial-gradient(circle at " +
+        this.state.gradient.gx +
+        "% 25%, " +
+        this.state.color +
+        ", #000)",
       borderRadius: "100%",
       boxShadow: "2px 2px 5px 0px #000",
       position: "absolute",
