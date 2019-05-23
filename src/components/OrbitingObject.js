@@ -136,6 +136,7 @@ class OrbitingObject extends React.Component {
         // calculation
         let gDecimalX = (px - totalRadiusX) / totalOrbitX;
         gx = 100 - Math.round(gDecimalX * 100);
+
         //  ------------------------------------------------
         //  Y POSITION
         //  ------------------------------------------------
@@ -160,25 +161,26 @@ class OrbitingObject extends React.Component {
             totalRadiusX -= solarSystem[solarObject.parentId].radius;
             totalOrbitX += solarSystem[solarObject.parentId].radius;
           }
-          // calculation
+          // calculation - the offset of the gradient is proportional to the diameter
+          // of the diameter
           let gDecimalX = (px - totalRadiusX) / totalOrbitX;
-          gx =
-            gDecimalX * (200 * universe.scale) * (1 + gDecimalX) +
-            100 * universe.scale;
+          gx = gDecimalX * (300 * universe.scale) * (1 + gDecimalX) + 100;
         } else {
           // bottom right hemisphere
 
           // planets
-          let totalRadiusX = universe.center.cx + solarObject.radius;
+          let totalRadiusX =
+            universe.center.cx + solarObject.radius - solarObject.diameter; // minus the diameter to correct for a y position bug
           let totalOrbitX = solarObject.radius;
           // satellites
           if (solarObject.parentId !== "sun") {
             totalRadiusX += solarSystem[solarObject.parentId].radius;
             totalOrbitX += solarSystem[solarObject.parentId].radius;
           }
-          // calculation
+          // calculation - the offset of the gradient is proportional to the diameter
+          // of the diameter
           let gDecimalX = (totalRadiusX - px) / totalOrbitX;
-          gx = gDecimalX * (-200 * universe.scale) * (1 + gDecimalX);
+          gx = gDecimalX * (-175 * universe.scale) * (1 + gDecimalX);
         }
         //  ------------------------------------------------
       }
@@ -210,7 +212,7 @@ class OrbitingObject extends React.Component {
         this.state.color +
         ", #000)",
       borderRadius: "100%",
-      boxShadow: "2px 2px 5px 0px #000",
+      // boxShadow: `1px 1px 5px 0px #000`,
       position: "absolute",
       top: `${this.state.position.py}px`,
       left: `${this.state.position.px}px`,
