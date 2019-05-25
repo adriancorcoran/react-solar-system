@@ -21,7 +21,9 @@ class App extends React.Component {
         speed: 0.75,
         frameRate: 50,
         zIndex: 5000,
-        scale: 1
+        scale: 1,
+        cxOffset: 0,
+        cyOffset: 0
       },
       solarSystem: { ...solarSystemData }
     };
@@ -45,13 +47,13 @@ class App extends React.Component {
     window.removeEventListener("resize", this.updateUniverseCenter);
   }
 
-  updateUniverseCenter = () => {
+  updateUniverseCenter = (cxOffset = 0, cyOffset = 0) => {
     this.setState({
       universe: {
         ...this.state.universe,
         center: {
-          cx: window.innerWidth / 2,
-          cy: window.innerHeight / 2
+          cx: window.innerWidth / 2 + cxOffset,
+          cy: window.innerHeight / 2 + cyOffset
         }
       }
     });

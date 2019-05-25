@@ -59,23 +59,24 @@ class OrbitingObject extends React.Component {
       cy: universe.center.cy
     };
     // check for parent
-    if (this.state.parentId) {
+    if (this.state.parentId && this.state.parentId !== "universe") {
       // get parent position
       parentPosition = getPosition(this.state.parentElement);
     }
     //  ------------------------------------------------
     // calculate x and y position
-    let px =
-      parentPosition.cx +
+    let xOffset =
       solarObject.radius * universe.scale * Math.cos(angle) -
       (solarObject.diameter * universe.scale) / 2;
-    let py =
-      parentPosition.cy +
+    let px = parentPosition.cx + xOffset;
+    //
+    let yOffset =
       solarObject.radius *
         universe.scale *
         (1 - this.props.universe.viewTilt) *
         Math.sin(angle) -
       (solarObject.diameter * universe.scale) / 2;
+    let py = parentPosition.cy + yOffset - solarObject.orbitalTilt * xOffset;
 
     //  ------------------------------------------------
     //  CALCULATE Z-INDEX
@@ -137,6 +138,17 @@ class OrbitingObject extends React.Component {
         let gDecimalX = (px - totalRadiusX) / totalOrbitX;
         gx = 100 - Math.round(gDecimalX * 100);
 
+        // if (solarObject.name === "Venus") {
+        //   console.log(
+        //     universe.center.cx,
+        //     px,
+        //     totalRadiusX,
+        //     totalOrbitX,
+        //     gDecimalX,
+        //     universe.scale
+        //   );
+        // }
+
         //  ------------------------------------------------
         //  Y POSITION
         //  ------------------------------------------------
@@ -154,33 +166,63 @@ class OrbitingObject extends React.Component {
           // up as we get closer to -500
 
           // planets
-          let totalRadiusX = universe.center.cx - solarObject.radius;
-          let totalOrbitX = solarObject.radius;
+          let totalRadiusX =
+            universe.center.cx -
+            universe.scale * (solarObject.radius + solarObject.diameter);
+          let totalOrbitX = universe.scale * solarObject.radius;
           // satellites
           if (solarObject.parentId !== "sun") {
-            totalRadiusX -= solarSystem[solarObject.parentId].radius;
-            totalOrbitX += solarSystem[solarObject.parentId].radius;
+            totalRadiusX -=
+              universe.scale * solarSystem[solarObject.parentId].radius;
+            totalOrbitX +=
+              universe.scale * solarSystem[solarObject.parentId].radius;
           }
           // calculation - the offset of the gradient is proportional to the diameter
           // of the diameter
           let gDecimalX = (px - totalRadiusX) / totalOrbitX;
           gx = gDecimalX * (300 * universe.scale) * (1 + gDecimalX) + 100;
+
+          // if (solarObject.name === "Venus") {
+          //   console.log(
+          //     universe.center.cx,
+          //     px,
+          //     totalRadiusX,
+          //     totalOrbitX,
+          //     gDecimalX,
+          //     universe.scale
+          //   );
+          // }
         } else {
           // bottom right hemisphere
 
           // planets
           let totalRadiusX =
-            universe.center.cx + solarObject.radius - solarObject.diameter; // minus the diameter to correct for a y position bug
-          let totalOrbitX = solarObject.radius;
+            universe.center.cx +
+            universe.scale * (solarObject.radius - solarObject.diameter); // minus the diameter to correct for a y position bug
+          let totalOrbitX = universe.scale * solarObject.radius;
           // satellites
           if (solarObject.parentId !== "sun") {
-            totalRadiusX += solarSystem[solarObject.parentId].radius;
-            totalOrbitX += solarSystem[solarObject.parentId].radius;
+            totalRadiusX +=
+              universe.scale * solarSystem[solarObject.parentId].radius;
+            totalOrbitX +=
+              universe.scale * solarSystem[solarObject.parentId].radius;
           }
           // calculation - the offset of the gradient is proportional to the diameter
           // of the diameter
           let gDecimalX = (totalRadiusX - px) / totalOrbitX;
           gx = gDecimalX * (-175 * universe.scale) * (1 + gDecimalX);
+
+          // if (solarObject.name === "Venus") {
+          //   console.log(
+          //     universe.center.cx,
+          //     solarObject.radius,
+          //     totalRadiusX,
+          //     totalOrbitX,
+          //     px,
+          //     gDecimalX,
+          //     universe.scale
+          //   );
+          // }
         }
         //  ------------------------------------------------
       }
