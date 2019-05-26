@@ -47,9 +47,7 @@ class OrbitingObject extends React.Component {
     //  CALCULATE POSITION
     //  ------------------------------------------------
     // calculate new angle
-    let angle =
-      solarObject.angle +
-      solarObject.angleChange * solarObject.speed * universe.speed;
+    let angle = solarObject.angle + solarObject.speed * universe.speed;
     // check if over 360 and reset - stop number getting too high
     if (angle >= 360) angle = 0;
     //  ------------------------------------------------

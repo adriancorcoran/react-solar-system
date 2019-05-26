@@ -17,11 +17,11 @@ class App extends React.Component {
           cx: window.innerWidth / 2,
           cy: window.innerHeight / 2
         },
-        viewTilt: 0.85,
-        speed: 0.75,
-        frameRate: 50,
+        viewTilt: 0.9,
+        speed: 0.5,
+        frameRate: 70,
         zIndex: 5000,
-        scale: 1,
+        scale: 0.8,
         cxOffset: 0,
         cyOffset: 0
       },
