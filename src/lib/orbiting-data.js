@@ -83,7 +83,7 @@ exports.solarSystemData = {
     orbitalTilt: -0.2,
     diameter: 4,
     radius: 30,
-    speed: 1 * 0.025,
+    speed: 2 * 0.025,
     color: "#FFE7D6",
     zIndexVariation: 1
   },
@@ -95,7 +95,7 @@ exports.solarSystemData = {
     orbitalTilt: 0.1,
     diameter: 3,
     radius: 40,
-    speed: 0.9 * 0.025,
+    speed: 2.9 * 0.025,
     color: "#FFE7D6",
     zIndexVariation: 2
   },
