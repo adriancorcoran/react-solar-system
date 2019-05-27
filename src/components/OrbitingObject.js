@@ -7,7 +7,7 @@ class OrbitingObject extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      ...props.solarObject,
+      // ...props.solarObject,
       position: { px: 0, py: 0 },
       gradient: { gx: 0, gy: 0 },
       display: "none",
@@ -18,9 +18,11 @@ class OrbitingObject extends React.Component {
   // mount the object and create the interval to update the position
   componentDidMount() {
     // set a reference in state to the parent element, if exists
-    if (this.state.parentId !== false) {
+    if (this.props.solarObject.parentId !== false) {
       this.setState({
-        parentElement: document.querySelector(`#${this.state.parentId}`)
+        parentElement: document.querySelector(
+          `#${this.props.solarObject.parentId}`
+        )
       });
     }
 
@@ -40,7 +42,7 @@ class OrbitingObject extends React.Component {
     // console.log(this.state);
     //  ------------------------------------------------
     // get copy of state and universe
-    let solarObject = { ...this.state };
+    let solarObject = { ...this.props.solarObject, ...this.state };
     let universe = { ...this.props.universe };
     let solarSystem = { ...this.props.solarSystem };
     //  ------------------------------------------------
@@ -57,9 +59,9 @@ class OrbitingObject extends React.Component {
       cy: universe.center.cy
     };
     // check for parent
-    if (this.state.parentId && this.state.parentId !== "universe") {
+    if (solarObject.parentId && solarObject.parentId !== "universe") {
       // get parent position
-      parentPosition = getPosition(this.state.parentElement);
+      parentPosition = getPosition(solarObject.parentElement);
     }
     //  ------------------------------------------------
     // calculate x and y position
@@ -71,7 +73,7 @@ class OrbitingObject extends React.Component {
     let yOffset =
       solarObject.radius *
         universe.scale *
-        (1 - this.props.universe.viewTilt) *
+        (1 - universe.viewTilt) *
         Math.sin(angle) -
       (solarObject.diameter * universe.scale) / 2;
     let py = parentPosition.cy + yOffset - solarObject.orbitalTilt * xOffset;
@@ -89,8 +91,8 @@ class OrbitingObject extends React.Component {
     // this makes the objects pass behind each other correctly
     this.setState({
       zIndex: hemiTopParent
-        ? getZIndex(this.state.parentElement) - solarObject.zIndexVariation
-        : getZIndex(this.state.parentElement) + solarObject.zIndexVariation
+        ? getZIndex(solarObject.parentElement) - solarObject.zIndexVariation
+        : getZIndex(solarObject.parentElement) + solarObject.zIndexVariation
     });
 
     //  ------------------------------------------------
@@ -135,24 +137,6 @@ class OrbitingObject extends React.Component {
         // calculation
         let gDecimalX = (px - totalRadiusX) / totalOrbitX;
         gx = 100 - Math.round(gDecimalX * 100);
-
-        // if (solarObject.name === "Venus") {
-        //   console.log(
-        //     universe.center.cx,
-        //     px,
-        //     totalRadiusX,
-        //     totalOrbitX,
-        //     gDecimalX,
-        //     universe.scale
-        //   );
-        // }
-
-        //  ------------------------------------------------
-        //  Y POSITION
-        //  ------------------------------------------------
-        // calculation
-        // let gDecimalY = Math.abs(py - universe.center.cy) / solarObject.radius;
-        // gy = 50 + gDecimalY * 50 * (1 - universe.viewTilt);
         //  ------------------------------------------------
       } else {
         //  ------------------------------------------------
@@ -178,18 +162,9 @@ class OrbitingObject extends React.Component {
           // calculation - the offset of the gradient is proportional to the diameter
           // of the diameter
           let gDecimalX = (px - totalRadiusX) / totalOrbitX;
-          gx = gDecimalX * (300 * universe.scale) * (1 + gDecimalX) + 100;
-
-          // if (solarObject.name === "Venus") {
-          //   console.log(
-          //     universe.center.cx,
-          //     px,
-          //     totalRadiusX,
-          //     totalOrbitX,
-          //     gDecimalX,
-          //     universe.scale
-          //   );
-          // }
+          gx =
+            100 +
+            gDecimalX * Math.pow(0.7 * universe.scale + gDecimalX, 3) * 200;
         } else {
           // bottom right hemisphere
 
@@ -208,19 +183,7 @@ class OrbitingObject extends React.Component {
           // calculation - the offset of the gradient is proportional to the diameter
           // of the diameter
           let gDecimalX = (totalRadiusX - px) / totalOrbitX;
-          gx = gDecimalX * (-175 * universe.scale) * (1 + gDecimalX);
-
-          // if (solarObject.name === "Venus") {
-          //   console.log(
-          //     universe.center.cx,
-          //     solarObject.radius,
-          //     totalRadiusX,
-          //     totalOrbitX,
-          //     px,
-          //     gDecimalX,
-          //     universe.scale
-          //   );
-          // }
+          gx = gDecimalX * Math.pow(0.8 * universe.scale + gDecimalX, 3) * -200;
         }
         //  ------------------------------------------------
       }
@@ -240,8 +203,8 @@ class OrbitingObject extends React.Component {
     });
   }
 
+  // style object and render position using state
   render() {
-    // style object and render position using state
     const style = {
       background:
         "radial-gradient(circle at " +
@@ -249,21 +212,26 @@ class OrbitingObject extends React.Component {
         "% " +
         this.state.gradient.gy +
         "%, " +
-        this.state.color +
+        this.props.solarObject.color +
         ", #000)",
       borderRadius: "100%",
       // boxShadow: `1px 1px 5px 0px #000`,
       position: "absolute",
       top: `${this.state.position.py}px`,
       left: `${this.state.position.px}px`,
-      width: `${this.state.diameter * this.props.universe.scale}px`,
-      height: `${this.state.diameter * this.props.universe.scale}px`,
+      width: `${this.props.solarObject.diameter * this.props.universe.scale}px`,
+      height: `${this.props.solarObject.diameter *
+        this.props.universe.scale}px`,
       display: this.state.display,
       zIndex: this.state.zIndex
     };
 
     return (
-      <div id={this.state.id} className="orbiting-object" style={style}>
+      <div
+        id={this.props.solarObject.id}
+        className="orbiting-object"
+        style={style}
+      >
         &nbsp;
       </div>
     );
