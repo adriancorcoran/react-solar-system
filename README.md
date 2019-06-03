@@ -4,4 +4,4 @@ This project creates a simple solar system model using circular motion equations
 
 ## Getting Started
 
-After cloning, run `npm start` in your console to start up the project and then visit [http://localhost:3000](http://localhost:3000) to view it in the browser.
+After cloning, run `npm install` in your console to install dependencies and then `npm start` to start up the server. Then visit [http://localhost:3000](http://localhost:3000) to view it in the browser.
