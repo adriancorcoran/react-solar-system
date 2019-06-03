@@ -1,5 +1,6 @@
 import React from "react";
 import OrbitingObject from "./components/OrbitingObject";
+import ScaleButton from "./components/ScaleButton";
 // import logo from "./logo.svg";
 // styles
 import "./css/App.css";
@@ -59,6 +60,17 @@ class App extends React.Component {
     });
   };
 
+  updateScale = change => {
+    console.log(`hi there!`);
+    this.setState({
+      universe: {
+        ...this.state.universe,
+        scale: 1,
+        speed: 1
+      }
+    });
+  };
+
   render() {
     // style object and render position using state
     const style = {
@@ -76,14 +88,17 @@ class App extends React.Component {
         {Object.keys(solarSystemData).map((key, i) => {
           let solarObject = solarSystemData[key];
           return (
-            <OrbitingObject
-              key={i}
-              universe={this.state.universe}
-              solarSystem={this.state.solarSystem}
-              solarObject={solarObject}
-            />
+            <>
+              <OrbitingObject
+                key={i}
+                universe={this.state.universe}
+                solarSystem={this.state.solarSystem}
+                solarObject={solarObject}
+              />
+            </>
           );
         })}
+        <ScaleButton clickAction={this.updateScale} />
       </div>
     );
   }
