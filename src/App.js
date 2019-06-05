@@ -3,8 +3,8 @@ import OrbitingObject from "./components/OrbitingObject";
 import ScaleButton from "./components/ScaleButton";
 // import logo from "./logo.svg";
 // styles
-import "./css/App.css";
-import "./css/Starfield.css";
+import "./css/App.scss";
+import "./css/Starfield.scss";
 // helpers and data
 import { solarSystemData } from "./lib/orbiting-data";
 
