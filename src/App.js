@@ -1,10 +1,8 @@
 import React from "react";
 import OrbitingObject from "./components/OrbitingObject";
-import ScaleButton from "./components/ScaleButton";
-// import logo from "./logo.svg";
+import ScaleControl from "./components/ScaleControl";
 // styles
-import "./css/App.scss";
-import "./css/Starfield.scss";
+import "./assets/scss/main.scss";
 // helpers and data
 import { solarSystemData } from "./lib/orbiting-data";
 
@@ -88,17 +86,15 @@ class App extends React.Component {
         {Object.keys(solarSystemData).map((key, i) => {
           let solarObject = solarSystemData[key];
           return (
-            <>
-              <OrbitingObject
-                key={i}
-                universe={this.state.universe}
-                solarSystem={this.state.solarSystem}
-                solarObject={solarObject}
-              />
-            </>
+            <OrbitingObject
+              key={i}
+              universe={this.state.universe}
+              solarSystem={this.state.solarSystem}
+              solarObject={solarObject}
+            />
           );
         })}
-        <ScaleButton clickAction={this.updateScale} />
+        <ScaleControl clickAction={this.updateScale} />
       </div>
     );
   }
