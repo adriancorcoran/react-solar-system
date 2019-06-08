@@ -1,6 +1,7 @@
 import React from "react";
 import OrbitingObject from "./components/OrbitingObject";
 import ScaleControl from "./components/ScaleControl";
+import SpeedControl from "./components/SpeedControl";
 // styles
 import "./assets/scss/main.scss";
 // helpers and data
@@ -17,10 +18,16 @@ class App extends React.Component {
           cy: window.innerHeight / 2
         },
         viewTilt: 0.8,
-        speed: 0.5,
+        speed: 1,
+        speedStep: 0.2,
+        speedLimitLower: 0.2,
+        speedLimitUpper: 5,
         frameRate: 70,
         zIndex: 5000,
         scale: 0.4,
+        scaleStep: 0.1,
+        scaleLimitLower: 0.1,
+        scaleLimitUpper: 2,
         cxOffset: 0,
         cyOffset: 0
       },
@@ -58,13 +65,26 @@ class App extends React.Component {
     });
   };
 
-  updateScale = change => {
-    console.log(`hi there!`);
+  clickAction = (changeType, change) => {
+    // get current values - need to change in whole numbers to avoid tiny fractions creeping in
+    let tmpScale = this.state.universe.scale * 10;
+    let tmpScaleStep = this.state.universe.scaleStep * 10;
+    let tmpSpeed = this.state.universe.speed * 10;
+    let tmpSpeedStep = this.state.universe.speedStep * 10;
+    // change scale or speed
+    if (changeType === "scale") {
+      tmpScale =
+        change === "-" ? tmpScale - tmpScaleStep : tmpScale + tmpScaleStep;
+    } else if (changeType === "speed") {
+      tmpSpeed =
+        change === "-" ? tmpSpeed - tmpSpeedStep : tmpSpeed + tmpSpeedStep;
+    }
+    // set new scale
     this.setState({
       universe: {
         ...this.state.universe,
-        scale: 1,
-        speed: 1
+        scale: tmpScale / 10,
+        speed: tmpSpeed / 10
       }
     });
   };
@@ -94,7 +114,24 @@ class App extends React.Component {
             />
           );
         })}
-        <ScaleControl clickAction={this.updateScale} />
+        <ScaleControl
+          clickAction={this.clickAction}
+          universeScale={{
+            scale: this.state.universe.scale,
+            scaleStep: this.state.universe.scaleStep,
+            scaleLimitLower: this.state.universe.scaleLimitLower,
+            scaleLimitUpper: this.state.universe.scaleLimitUpper
+          }}
+        />
+        <SpeedControl
+          clickAction={this.clickAction}
+          universeSpeed={{
+            speed: this.state.universe.speed,
+            speedStep: this.state.universe.speedStep,
+            speedLimitLower: this.state.universe.speedLimitLower,
+            speedLimitUpper: this.state.universe.speedLimitUpper
+          }}
+        />
       </div>
     );
   }

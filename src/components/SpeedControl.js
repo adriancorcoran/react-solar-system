@@ -1,29 +1,29 @@
 import React from "react";
 import ControlContainer from "../assets/styled-components/ControlContainer";
 
-class ScaleControl extends React.Component {
+class SpeedControl extends React.Component {
   decrease = () => {
-    this.props.clickAction("scale", "-");
+    this.props.clickAction("speed", "-");
   };
 
   increase = () => {
-    this.props.clickAction("scale", "+");
+    this.props.clickAction("speed", "+");
   };
 
   render() {
     return (
-      <ControlContainer style={{ top: 0 }}>
-        {this.props.universeScale.scale >
-        this.props.universeScale.scaleLimitLower ? (
+      <ControlContainer style={{ bottom: 0 }}>
+        {this.props.universeSpeed.speed >
+        this.props.universeSpeed.speedLimitLower ? (
           <button onClick={this.decrease}>-</button>
         ) : (
           <button disabled="disabled" className="disabled">
             -
           </button>
         )}
-        <p>Scale is {this.props.universeScale.scale}</p>
-        {this.props.universeScale.scale <
-        this.props.universeScale.scaleLimitUpper ? (
+        <p>Speed is {this.props.universeSpeed.speed}</p>
+        {this.props.universeSpeed.speed <
+        this.props.universeSpeed.speedLimitUpper ? (
           <button onClick={this.increase}>+</button>
         ) : (
           <button disabled="disabled" className="disabled">
@@ -35,4 +35,4 @@ class ScaleControl extends React.Component {
   }
 }
 
-export default ScaleControl;
+export default SpeedControl;
