@@ -7,6 +7,11 @@ const ButtonContainer = styled.div`
   opacity: 0.1;
   position: absolute;
   top: calc(50% - 20px);
+  animation: fadeOut 1s linear;
+
+  &:hover {
+    animation: fadeIn 1s linear both;
+  }
 
   & button {
     display: block;
@@ -18,6 +23,23 @@ const ButtonContainer = styled.div`
     font-family: Arial, Helvetica, sans-serif;
     border: 2px solid #fff;
     background: none;
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0.1;
+    }
+    to {
+      opacity: 0.5;
+    }
+  }
+  @keyframes fadeOut {
+    from {
+      opacity: 0.5;
+    }
+    to {
+      opacity: 0.1;
+    }
   }
 `;
 

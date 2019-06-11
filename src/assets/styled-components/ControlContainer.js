@@ -7,6 +7,11 @@ const ControlContainer = styled.div`
   opacity: 0.1;
   position: absolute;
   width: 100%;
+  animation: fadeOut 1s linear;
+
+  &:hover {
+    animation: fadeIn 1s linear both;
+  }
 
   & * {
     display: flex;
@@ -31,6 +36,23 @@ const ControlContainer = styled.div`
 
     &.disabled {
       color: #f00;
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0.1;
+    }
+    to {
+      opacity: 0.5;
+    }
+  }
+  @keyframes fadeOut {
+    from {
+      opacity: 0.5;
+    }
+    to {
+      opacity: 0.1;
     }
   }
 `;
