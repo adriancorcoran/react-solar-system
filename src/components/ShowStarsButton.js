@@ -8,7 +8,7 @@ class ShowStarsButton extends React.Component {
 
   render() {
     return (
-      <ButtonContainer style={{ top: 0, right: 0 }}>
+      <ButtonContainer style={{ right: 0 }}>
         <button onClick={this.toggleStars}>{this.props.buttonText}</button>
       </ButtonContainer>
     );

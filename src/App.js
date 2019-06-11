@@ -31,9 +31,7 @@ class App extends React.Component {
         scale: 0.4,
         scaleStep: 0.1,
         scaleLimitLower: 0.1,
-        scaleLimitUpper: 2,
-        cxOffset: 0,
-        cyOffset: 0
+        scaleLimitUpper: 2
       },
       solarSystem: { ...solarSystemData },
       showStars: true
@@ -58,13 +56,13 @@ class App extends React.Component {
     window.removeEventListener("resize", this.updateUniverseCenter);
   }
 
-  updateUniverseCenter = (cxOffset = 0, cyOffset = 0) => {
+  updateUniverseCenter = () => {
     this.setState({
       universe: {
         ...this.state.universe,
         center: {
-          cx: window.innerWidth / 2 + cxOffset,
-          cy: window.innerHeight / 2 + cyOffset
+          cx: window.innerWidth / 2,
+          cy: window.innerHeight / 2
         }
       }
     });

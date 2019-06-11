@@ -7,7 +7,6 @@ const ControlContainer = styled.div`
   opacity: 0.1;
   position: absolute;
   width: 100%;
-  /* ${props => props.location}: 0; */
 
   & * {
     display: flex;

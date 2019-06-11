@@ -6,8 +6,7 @@ const ButtonContainer = styled.div`
   z-index: 9999;
   opacity: 0.1;
   position: absolute;
-  /* width: 100%; */
-  /* ${props => props.location}: 0; */
+  top: calc(50% - 20px);
 
   & button {
     display: block;
@@ -16,11 +15,9 @@ const ButtonContainer = styled.div`
     min-height: 20px;
     color: #fff;
     font-size: 1em;
-    /* font-size: 2em; */
     font-family: Arial, Helvetica, sans-serif;
     border: 2px solid #fff;
     background: none;
-      /* padding-bottom: 10px; */
   }
 `;
 

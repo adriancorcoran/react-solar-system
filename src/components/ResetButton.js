@@ -8,7 +8,7 @@ class ResetButton extends React.Component {
 
   render() {
     return (
-      <ButtonContainer style={{ top: 0, left: 0 }}>
+      <ButtonContainer style={{ left: 0 }}>
         <button onClick={this.reset}>Reset</button>
       </ButtonContainer>
     );
