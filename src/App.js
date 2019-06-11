@@ -2,6 +2,7 @@ import React from "react";
 import OrbitingObject from "./components/OrbitingObject";
 import ScaleControl from "./components/ScaleControl";
 import SpeedControl from "./components/SpeedControl";
+import ResetButton from "./components/ResetButton";
 // styles
 import "./assets/scss/main.scss";
 // helpers and data
@@ -18,12 +19,14 @@ class App extends React.Component {
           cy: window.innerHeight / 2
         },
         viewTilt: 0.8,
+        defaultSpeed: 1,
         speed: 1,
         speedStep: 0.2,
         speedLimitLower: 0.2,
         speedLimitUpper: 5,
         frameRate: 70,
         zIndex: 5000,
+        defaultScale: 0.4,
         scale: 0.4,
         scaleStep: 0.1,
         scaleLimitLower: 0.1,
@@ -65,7 +68,7 @@ class App extends React.Component {
     });
   };
 
-  clickAction = (changeType, change) => {
+  clickAction = (changeType, change = null) => {
     // get current values - need to change in whole numbers to avoid tiny fractions creeping in
     let tmpScale = this.state.universe.scale * 10;
     let tmpScaleStep = this.state.universe.scaleStep * 10;
@@ -78,6 +81,9 @@ class App extends React.Component {
     } else if (changeType === "speed") {
       tmpSpeed =
         change === "-" ? tmpSpeed - tmpSpeedStep : tmpSpeed + tmpSpeedStep;
+    } else if (changeType === "reset") {
+      tmpSpeed = this.state.universe.defaultSpeed * 10;
+      tmpScale = this.state.universe.defaultScale * 10;
     }
     // set new scale
     this.setState({
@@ -132,6 +138,7 @@ class App extends React.Component {
             speedLimitUpper: this.state.universe.speedLimitUpper
           }}
         />
+        <ResetButton clickAction={this.clickAction} />
       </div>
     );
   }
