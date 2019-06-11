@@ -3,7 +3,7 @@ import styled from "styled-components";
 const ControlContainer = styled.div`
   display: flex;
   justify-content: center;
-  z-index: 9999;
+  z-index: 9998;
   opacity: 0.1;
   position: absolute;
   width: 100%;

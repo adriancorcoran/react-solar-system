@@ -3,7 +3,7 @@ import styled from "styled-components";
 const ButtonContainer = styled.div`
   display: block;
   text-align: center;
-  z-index: 9999;
+  z-index: 9998;
   opacity: 0.1;
   position: absolute;
   top: calc(50% - 20px);

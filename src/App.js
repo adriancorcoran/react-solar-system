@@ -4,6 +4,7 @@ import ScaleControl from "./components/ScaleControl";
 import SpeedControl from "./components/SpeedControl";
 import ResetButton from "./components/ResetButton";
 import ShowStarsButton from "./components/ShowStarsButton";
+import Footer from "./components/Footer";
 // styles
 import "./assets/scss/main.scss";
 // helpers and data
@@ -152,6 +153,7 @@ class App extends React.Component {
           clickAction={this.toggleStars}
           buttonText={this.state.showStars ? "Hide Stars" : "Show Stars"}
         />
+        <Footer />
       </div>
     );
   }

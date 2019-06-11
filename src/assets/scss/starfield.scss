@@ -1,3 +1,5 @@
+// starfield adapted from https://codepen.io/saransh/pen/BKJun
+
 $star-color: "#666";
 
 // n is number of stars required
@@ -6,14 +8,15 @@ $star-color: "#666";
   @for $i from 2 through $n {
     $value: "#{$value} , #{random(100)}vw #{random(100)}vh "+$star-color;
   }
-
   @return unquote($value);
 }
 
+// generate the number of stars
 $shadows-small: multiple-box-shadow(350);
 $shadows-medium: multiple-box-shadow(100);
 $shadows-big: multiple-box-shadow(50);
 
+// number of stars for mobile devices - there's less of them
 $shadows-small-sm: multiple-box-shadow(100);
 $shadows-medium-sm: multiple-box-shadow(30);
 $shadows-big-sm: multiple-box-shadow(20);
@@ -32,7 +35,7 @@ html {
   @media only screen and (max-width: 768px) {
     box-shadow: $shadows-small-sm;
   }
-  animation: animStar 200s linear infinite;
+  animation: animStar 100s linear infinite;
 
   &:after {
     content: " ";
@@ -55,7 +58,7 @@ html {
   @media only screen and (max-width: 768px) {
     box-shadow: $shadows-medium-sm;
   }
-  animation: animStar 400s linear infinite;
+  animation: animStar 200s linear infinite;
 
   &:after {
     content: " ";
@@ -78,7 +81,7 @@ html {
   @media only screen and (max-width: 768px) {
     box-shadow: $shadows-big-sm;
   }
-  animation: animStar 600s linear infinite;
+  animation: animStar 300s linear infinite;
 
   &:after {
     content: " ";
@@ -91,28 +94,6 @@ html {
     @media only screen and (max-width: 768px) {
       box-shadow: $shadows-big-sm;
     }
-  }
-}
-#title {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-
-  color: #fff;
-  text-align: center;
-  font-family: "lato", sans-serif;
-  font-weight: 300;
-  font-size: 50px;
-  letter-spacing: 10px;
-
-  margin-top: -60px;
-  padding-left: 10px;
-
-  span {
-    background: -webkit-linear-gradient(white, #38495a);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
   }
 }
 @keyframes animStar {
