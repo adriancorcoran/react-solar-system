@@ -3,6 +3,7 @@ import OrbitingObject from "./components/OrbitingObject";
 import ScaleControl from "./components/ScaleControl";
 import SpeedControl from "./components/SpeedControl";
 import ResetButton from "./components/ResetButton";
+import ShowStarsButton from "./components/ShowStarsButton";
 // styles
 import "./assets/scss/main.scss";
 // helpers and data
@@ -34,7 +35,8 @@ class App extends React.Component {
         cxOffset: 0,
         cyOffset: 0
       },
-      solarSystem: { ...solarSystemData }
+      solarSystem: { ...solarSystemData },
+      showStars: true
     };
   }
 
@@ -95,6 +97,10 @@ class App extends React.Component {
     });
   };
 
+  toggleStars = () => {
+    this.setState({ showStars: !this.state.showStars });
+  };
+
   render() {
     // style object and render position using state
     const style = {
@@ -103,9 +109,14 @@ class App extends React.Component {
 
     return (
       <div id="universe" className="universe" style={style}>
-        <div id="stars" />
-        <div id="stars2" />
-        <div id="stars3" />
+        {/* render the stars */}
+        {this.state.showStars && (
+          <React.Fragment>
+            <div id="stars" />
+            <div id="stars2" />
+            <div id="stars3" />
+          </React.Fragment>
+        )}
 
         {/* render the solar system objects */}
 
@@ -139,6 +150,10 @@ class App extends React.Component {
           }}
         />
         <ResetButton clickAction={this.clickAction} />
+        <ShowStarsButton
+          clickAction={this.toggleStars}
+          buttonText={this.state.showStars ? "Hide Stars" : "Show Stars"}
+        />
       </div>
     );
   }
