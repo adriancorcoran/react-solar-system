@@ -12,5 +12,5 @@ If you wanna see it in action, head to [https://a36-solarsystem.netlify.com/](ht
 
 ## Run Locally
 
-If you;d like to check out the code and get it running locally to mess with it, simply clone it down, run `npm install` in your console to install dependencies and then `npm start` to start up the server. Then visit [http://localhost:3000](http://localhost:3000) to view it in the browser.
+If you'd like to check out the code and get it running locally to mess with it, simply clone it down, run `npm install` in your console to install dependencies and then `npm start` to start up the server. Then visit [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
